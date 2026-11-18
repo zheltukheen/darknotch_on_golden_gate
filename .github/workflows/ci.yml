@@ -13,7 +13,7 @@ permissions:
 jobs:
   build:
     name: Build and verify
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
       - name: Check out
         uses: actions/checkout@v4

@@ -21,7 +21,7 @@ concurrency:
 jobs:
   release:
     name: Build and publish DMG
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
       - name: Check out
         uses: actions/checkout@v4
