@@ -21,7 +21,10 @@ icon_locations = {
 }
 
 background = background
-window_rect = ((220, 140), (720, 460))
+# The Finder draws the background inside the content area. On macOS 27 the
+# chrome above it is 124 pt, so the window is 460 + 124 tall to keep the
+# 720x460 background unscaled and the bottom hint visible.
+window_rect = ((220, 140), (720, 584))
 default_view = "icon-view"
 icon_size = 128
 text_size = 14

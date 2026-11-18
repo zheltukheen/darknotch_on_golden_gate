@@ -43,6 +43,8 @@ hdiutil attach "$DMG" -nobrowse -readonly -mountpoint "$MOUNT" >/dev/null
 [[ -d "$MOUNT/DarkNotch.app" ]] || fail "app missing from disk image"
 [[ -L "$MOUNT/Applications" ]] || fail "Applications symlink missing"
 [[ -f "$MOUNT/README.txt" ]] || fail "README.txt missing"
+[[ -f "$MOUNT/.DS_Store" ]] || fail "Finder layout missing"
+[[ -f "$MOUNT/.background.tiff" || -f "$MOUNT/.background.png" ]] || fail "DMG background missing"
 [[ "$(readlink "$MOUNT/Applications")" == "/Applications" ]] || fail "bad Applications symlink"
 codesign --verify --strict "$MOUNT/DarkNotch.app" || fail "bad signature inside disk image"
 [[ "$(plutil -extract CFBundleShortVersionString raw "$MOUNT/DarkNotch.app/Contents/Info.plist")" == "$VERSION" ]] \
