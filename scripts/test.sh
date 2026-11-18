@@ -26,6 +26,7 @@ echo "==> Checking app bundle"
 [[ -d "$APP" ]] || fail "missing $APP"
 [[ -x "$APP/Contents/MacOS/DarkNotch" ]] || fail "missing executable"
 [[ -f "$APP/Contents/Resources/AppIcon.icns" ]] || fail "missing icon"
+[[ -f "$APP/Contents/Resources/LICENSE" ]] || fail "missing license"
 [[ "$(plutil -extract CFBundleIdentifier raw "$APP/Contents/Info.plist")" == "com.zheltukheen.darknotch" ]] \
     || fail "wrong bundle identifier"
 [[ "$(plutil -extract CFBundleShortVersionString raw "$APP/Contents/Info.plist")" == "$VERSION" ]] \

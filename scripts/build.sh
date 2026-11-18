@@ -51,6 +51,8 @@ for size in 16 32 128 256 512; do
 done
 iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/AppIcon.icns"
 
+cp "$ROOT/LICENSE" "$APP/Contents/Resources/LICENSE"
+
 echo "==> Writing Info.plist"
 sed -e "s/__VERSION__/$VERSION/g" -e "s/__BUILD__/$BUILD_NUMBER/g" \
     "$ROOT/packaging/Info.plist" > "$APP/Contents/Info.plist"
