@@ -1,0 +1,108 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, without the leading v (e.g. 1.0.1). Defaults to the VERSION file."
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Build and publish DMG
+    runs-on: macos-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            version="${GITHUB_REF_NAME#v}"
+            tag="$GITHUB_REF_NAME"
+          elif [[ -n "${INPUT_VERSION:-}" ]]; then
+            version="${INPUT_VERSION#v}"
+            tag="v$version"
+          else
+            version="$(tr -d '[:space:]' < VERSION)"
+            tag="v$version"
+          fi
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid version: $version" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Build, sign and verify
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: ./scripts/test.sh
+
+      - name: Write checksums
+        working-directory: dist
+        run: shasum -a 256 "DarkNotch-${{ steps.version.outputs.version }}.dmg" > SHA256SUMS
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DarkNotch-${{ steps.version.outputs.version }}
+          path: |
+            dist/DarkNotch-${{ steps.version.outputs.version }}.dmg
+            dist/SHA256SUMS
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+          TAG: ${{ steps.version.outputs.tag }}
+          IS_TAG: ${{ github.ref_type == 'tag' }}
+        run: |
+          set -euo pipefail
+          dmg="dist/DarkNotch-$VERSION.dmg"
+          cat > release-notes.md <<EOF
+          ## DarkNotch $VERSION
+
+          Стилизованный DMG: перетащите **DarkNotch** в **Applications**.
+
+          Приложение не подписано сертификатом Apple. При первом запуске macOS
+          покажет предупреждение — откройте **Системные настройки → Конфиденциальность
+          и безопасность → Безопасность → Открыть всё равно**. Подробности в README.txt
+          внутри образа.
+
+          SHA-256: \`$(cut -d' ' -f1 dist/SHA256SUMS)\`
+
+          ---
+
+          Styled DMG: drag **DarkNotch** into **Applications**. The app is unsigned,
+          so on first launch use **System Settings → Privacy & Security → Open Anyway**.
+          See README.txt inside the image.
+          EOF
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$dmg" dist/SHA256SUMS --clobber
+            gh release edit "$TAG" --title "DarkNotch $VERSION" --notes-file release-notes.md
+          elif [[ "$IS_TAG" == "true" ]]; then
+            gh release create "$TAG" "$dmg" dist/SHA256SUMS \
+              --title "DarkNotch $VERSION" --notes-file release-notes.md
+          else
+            gh release create "$TAG" "$dmg" dist/SHA256SUMS \
+              --title "DarkNotch $VERSION" --notes-file release-notes.md \
+              --target "$GITHUB_SHA"
+          fi
