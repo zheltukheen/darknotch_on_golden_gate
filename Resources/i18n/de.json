@@ -1,0 +1,26 @@
+{
+  "code": "de",
+  "name": "Deutsch",
+  "strings": {
+    "hide_notch": "Aussparung ausblenden",
+    "round_corners": "Abgerundete Ecken",
+    "off": "Aus",
+    "small": "Klein",
+    "medium": "Mittel",
+    "large": "Groß",
+    "hide_app_menus": "App-Menüs ausblenden",
+    "hide_menu_bar_icons": "Menüleistensymbole ausblenden",
+    "fade_full_screen": "Menüleiste im Vollbild abdunkeln",
+    "accessibility_on": "Bedienungshilfen: ein",
+    "accessibility_on_count": "Bedienungshilfen: ein · %d Symbole gefunden",
+    "accessibility_off": "Bedienungshilfen: aus, zum Beheben klicken",
+    "launch_at_login": "Bei der Anmeldung öffnen",
+    "launch_at_login_approve": "Bei der Anmeldung öffnen (in den Systemeinstellungen bestätigen)",
+    "check_for_updates": "Nach Updates suchen…",
+    "quit": "DarkNotch beenden",
+    "menu_bar_black": "Die Menüleiste ist schwarz",
+    "wallpaper_unreadable": "Dieses Hintergrundbild kann nicht gelesen werden. Wähle ein normales Bild",
+    "login_error_title": "Öffnen bei der Anmeldung konnte nicht geändert werden",
+    "login_error_message": "Verschiebe DarkNotch in den Ordner Programme und versuche es erneut.\n\n%@"
+  }
+}

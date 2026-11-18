@@ -1,0 +1,26 @@
+{
+  "code": "en",
+  "name": "English",
+  "strings": {
+    "hide_notch": "Hide Notch",
+    "round_corners": "Round Corners",
+    "off": "Off",
+    "small": "Small",
+    "medium": "Medium",
+    "large": "Large",
+    "hide_app_menus": "Hide App Menus",
+    "hide_menu_bar_icons": "Hide Menu Bar Icons",
+    "fade_full_screen": "Fade Menu Bar in Full Screen",
+    "accessibility_on": "Accessibility: on",
+    "accessibility_on_count": "Accessibility: on · %d icons found",
+    "accessibility_off": "Accessibility: off, click to fix",
+    "launch_at_login": "Launch at Login",
+    "launch_at_login_approve": "Launch at Login (approve in System Settings)",
+    "check_for_updates": "Check for Updates…",
+    "quit": "Quit DarkNotch",
+    "menu_bar_black": "Menu bar is black",
+    "wallpaper_unreadable": "Can't read this wallpaper, pick a regular image",
+    "login_error_title": "Couldn't change Launch at Login",
+    "login_error_message": "Move DarkNotch to your Applications folder and try again.\n\n%@"
+  }
+}

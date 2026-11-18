@@ -5,24 +5,29 @@
 import AppKit
 import ApplicationServices
 import ServiceManagement
+import Sparkle
 
 final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var statusItem: NSStatusItem!
-    private let toggleItem = NSMenuItem(title: "Hide Notch", action: #selector(toggleHide), keyEquivalent: "")
-    private let loginItem = NSMenuItem(title: "Launch at Login", action: #selector(toggleLogin), keyEquivalent: "")
+    private var updaterController: SPUStandardUpdaterController!
+    private let toggleItem = NSMenuItem(title: L10n.t("hide_notch"), action: #selector(toggleHide), keyEquivalent: "")
+    private let loginItem = NSMenuItem(title: L10n.t("launch_at_login"), action: #selector(toggleLogin), keyEquivalent: "")
     private let infoItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
-    private let cornersItem = NSMenuItem(title: "Round Corners", action: nil, keyEquivalent: "")
-    private let cornerSizes: [(String, CGFloat)] = [("Off", 0), ("Small", 8), ("Medium", 12), ("Large", 18)]
+    private let cornersItem = NSMenuItem(title: L10n.t("round_corners"), action: nil, keyEquivalent: "")
+    private let cornerSizes: [(String, CGFloat)] = [
+        (L10n.t("off"), 0), (L10n.t("small"), 8), (L10n.t("medium"), 12), (L10n.t("large"), 18)
+    ]
     private var cornerWindows: [NSWindow] = []
     private var cornerSignature = ""
-    private let menusItem = NSMenuItem(title: "Hide App Menus", action: #selector(toggleMenus), keyEquivalent: "")
+    private let menusItem = NSMenuItem(title: L10n.t("hide_app_menus"), action: #selector(toggleMenus), keyEquivalent: "")
     private let axItem = NSMenuItem(title: "", action: #selector(openAccessibility), keyEquivalent: "")
     private var lastIconCount = -1
-    private let iconsItem = NSMenuItem(title: "Hide Menu Bar Icons", action: #selector(toggleIcons), keyEquivalent: "")
+    private let iconsItem = NSMenuItem(title: L10n.t("hide_menu_bar_icons"), action: #selector(toggleIcons), keyEquivalent: "")
     private var menuCovers: [(window: NSWindow, bar: NSRect, screen: NSScreen, side: Side)] = []
     private var menuCoverSignature = ""
     private var hoverTimer: Timer?
-    private let fadeItem = NSMenuItem(title: "Fade Menu Bar in Full Screen", action: #selector(toggleFade), keyEquivalent: "")
+    private let fadeItem = NSMenuItem(title: L10n.t("fade_full_screen"), action: #selector(toggleFade), keyEquivalent: "")
+    private let updatesItem = NSMenuItem(title: L10n.t("check_for_updates"), action: nil, keyEquivalent: "")
     private var fullScreenCovers: [(window: NSWindow, bar: NSRect, screen: NSScreen)] = []
     private var fullScreenSignature = ""
     private var fullScreenTimer: Timer?
@@ -74,6 +79,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     // MARK: - Lifecycle
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         if let button = statusItem.button {
             if let img = NSImage(systemSymbolName: "rectangle.tophalf.filled", accessibilityDescription: "DarkNotch") {
@@ -109,10 +115,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         axItem.target = self
         menu.addItem(axItem)
         menu.addItem(loginItem)
+        updatesItem.target = self
+        updatesItem.action = #selector(checkForUpdates)
+        menu.addItem(updatesItem)
         menu.addItem(.separator())
         menu.addItem(infoItem)
         menu.addItem(.separator())
-        menu.addItem(NSMenuItem(title: "Quit DarkNotch", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem(title: L10n.t("quit"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
         statusItem.menu = menu
 
         let ws = NSWorkspace.shared.notificationCenter
@@ -144,16 +153,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         fadeItem.isEnabled = enabled
         fadeItem.state = fadeFullScreen ? .on : .off
         if AXIsProcessTrusted() {
-            axItem.title = lastIconCount >= 0 ? "Accessibility: on · \(lastIconCount) icons found" : "Accessibility: on"
+            axItem.title = lastIconCount >= 0
+                ? L10n.t("accessibility_on_count", lastIconCount)
+                : L10n.t("accessibility_on")
         } else {
-            axItem.title = "Accessibility: off, click to fix"
+            axItem.title = L10n.t("accessibility_off")
         }
         for item in cornersItem.submenu?.items ?? [] {
             item.state = cornerSizes[item.tag].1 == cornerRadius ? .on : .off
         }
         let status = SMAppService.mainApp.status
         loginItem.state = status == .enabled ? .on : .off
-        loginItem.title = status == .requiresApproval ? "Launch at Login (approve in System Settings)" : "Launch at Login"
+        loginItem.title = status == .requiresApproval
+            ? L10n.t("launch_at_login_approve")
+            : L10n.t("launch_at_login")
+    }
+
+    @objc private func checkForUpdates() {
+        updaterController.checkForUpdates(nil)
     }
 
     @objc private func somethingChanged(_ n: Notification) {
@@ -202,8 +219,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             }
         } catch {
             let alert = NSAlert()
-            alert.messageText = "Couldn't change Launch at Login"
-            alert.informativeText = "Move DarkNotch to your Applications folder and try again.\n\n\(error.localizedDescription)"
+            alert.messageText = L10n.t("login_error_title")
+            alert.informativeText = L10n.t("login_error_message", error.localizedDescription)
             alert.runModal()
         }
     }
@@ -253,9 +270,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
 
         if problem {
-            infoItem.title = "Can't read this wallpaper, pick a regular image"
+            infoItem.title = L10n.t("wallpaper_unreadable")
         } else {
-            infoItem.title = enabled ? "Menu bar is black" : "Off"
+            infoItem.title = enabled ? L10n.t("menu_bar_black") : L10n.t("off")
         }
     }
 

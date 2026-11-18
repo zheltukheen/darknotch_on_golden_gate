@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   release:
-    name: Build and publish DMG
+    name: Build and publish DMG and update feed
     runs-on: macos-15
     steps:
       - name: Check out
@@ -55,9 +55,21 @@ jobs:
           BUILD_NUMBER: ${{ github.run_number }}
         run: ./scripts/test.sh
 
+      - name: Build Sparkle appcast
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+          VERSION: ${{ steps.version.outputs.version }}
+          TAG: ${{ steps.version.outputs.tag }}
+          REPO: ${{ github.repository }}
+        run: ./scripts/make-appcast.sh
+
       - name: Write checksums
         working-directory: dist
-        run: shasum -a 256 "DarkNotch-${{ steps.version.outputs.version }}.dmg" > SHA256SUMS
+        run: |
+          shasum -a 256 \
+            "DarkNotch-${{ steps.version.outputs.version }}.dmg" \
+            "DarkNotch-${{ steps.version.outputs.version }}.zip" \
+            appcast.xml > SHA256SUMS
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v7
@@ -65,6 +77,8 @@ jobs:
           name: DarkNotch-${{ steps.version.outputs.version }}
           path: |
             dist/DarkNotch-${{ steps.version.outputs.version }}.dmg
+            dist/DarkNotch-${{ steps.version.outputs.version }}.zip
+            dist/appcast.xml
             dist/SHA256SUMS
 
       - name: Publish GitHub release
@@ -76,33 +90,43 @@ jobs:
         run: |
           set -euo pipefail
           dmg="dist/DarkNotch-$VERSION.dmg"
+          zip="dist/DarkNotch-$VERSION.zip"
           cat > release-notes.md <<EOF
           ## DarkNotch $VERSION
 
-          Стилизованный DMG: перетащите **DarkNotch** в **Applications**.
+          Сборка для **macOS 27 Golden Gate**. Перетащите **DarkNotch** в **Applications**.
 
-          Приложение не подписано сертификатом Apple. При первом запуске macOS
-          покажет предупреждение — откройте **Системные настройки → Конфиденциальность
-          и безопасность → Безопасность → Открыть всё равно**. Подробности в README.txt
-          внутри образа.
+          Внутри DMG — оформленная инструкция Install.html с разблокировкой
+          первого запуска и разрешением Accessibility. Приложение не подписано
+          сертификатом Apple: откройте **Системные настройки → Конфиденциальность
+          и безопасность → Безопасность → Открыть всё равно**.
 
-          SHA-256: \`$(cut -d' ' -f1 dist/SHA256SUMS)\`
+          Обновления приходят автоматически через Sparkle: **Проверить обновления…**
+          в меню приложения. Для обновления не нужен повторный DMG.
+
+          SHA-256: $(cut -d' ' -f1 dist/SHA256SUMS)
 
           ---
 
-          Styled DMG: drag **DarkNotch** into **Applications**. The app is unsigned,
-          so on first launch use **System Settings → Privacy & Security → Open Anyway**.
-          See README.txt inside the image.
+          Built for **macOS 27 Golden Gate**. Drag **DarkNotch** into **Applications**.
+
+          The DMG includes a styled Install.html guide for the first-launch
+          Gatekeeper prompt and Accessibility. The app is unsigned, so use
+          **System Settings → Privacy & Security → Open Anyway**.
+
+          Updates are delivered by Sparkle via **Check for Updates…** in the app menu.
+          SHA-256: $(cut -d' ' -f1 dist/SHA256SUMS)
           EOF
 
+          assets=("$dmg" "$zip" dist/appcast.xml dist/SHA256SUMS)
           if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" "$dmg" dist/SHA256SUMS --clobber
+            gh release upload "$TAG" "${assets[@]}" --clobber
             gh release edit "$TAG" --title "DarkNotch $VERSION" --notes-file release-notes.md
           elif [[ "$IS_TAG" == "true" ]]; then
-            gh release create "$TAG" "$dmg" dist/SHA256SUMS \
+            gh release create "$TAG" "${assets[@]}" \
               --title "DarkNotch $VERSION" --notes-file release-notes.md
           else
-            gh release create "$TAG" "$dmg" dist/SHA256SUMS \
+            gh release create "$TAG" "${assets[@]}" \
               --title "DarkNotch $VERSION" --notes-file release-notes.md \
               --target "$GITHUB_SHA"
           fi

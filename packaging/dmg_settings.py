@@ -3,7 +3,7 @@
 import os
 
 app = defines["app"]
-readme = defines["readme"]
+install = defines["install"]
 background = defines["background"]
 filename = defines["filename"]
 version = defines.get("version", "1.0.0")
@@ -11,13 +11,13 @@ version = defines.get("version", "1.0.0")
 volume_name = "DarkNotch " + version
 format = "UDZO"
 
-files = [app, readme]
+files = [app, install]
 symlinks = {"Applications": "/Applications"}
 
 icon_locations = {
     os.path.basename(app): (180, 210),
     "Applications": (540, 210),
-    os.path.basename(readme): (360, 350),
+    os.path.basename(install): (360, 350),
 }
 
 background = background

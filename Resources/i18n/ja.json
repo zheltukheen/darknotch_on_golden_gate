@@ -1,0 +1,26 @@
+{
+  "code": "ja",
+  "name": "日本語",
+  "strings": {
+    "hide_notch": "ノッチを隠す",
+    "round_corners": "角を丸める",
+    "off": "オフ",
+    "small": "小",
+    "medium": "中",
+    "large": "大",
+    "hide_app_menus": "アプリのメニューを隠す",
+    "hide_menu_bar_icons": "メニューバーのアイコンを隠す",
+    "fade_full_screen": "フルスクリーン時にメニューバーを暗くする",
+    "accessibility_on": "アクセシビリティ：オン",
+    "accessibility_on_count": "アクセシビリティ：オン · %d 個のアイコン",
+    "accessibility_off": "アクセシビリティ：オフ、クリックして修正",
+    "launch_at_login": "ログイン時に起動",
+    "launch_at_login_approve": "ログイン時に起動（システム設定で承認）",
+    "check_for_updates": "アップデートを確認…",
+    "quit": "DarkNotch を終了",
+    "menu_bar_black": "メニューバーは黒です",
+    "wallpaper_unreadable": "この壁紙を読み取れません。通常の画像を選んでください",
+    "login_error_title": "ログイン時の起動を変更できませんでした",
+    "login_error_message": "DarkNotch を Applications フォルダに移動して、もう一度お試しください。\n\n%@"
+  }
+}

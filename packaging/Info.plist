@@ -12,6 +12,21 @@
     <string>DarkNotch</string>
     <key>CFBundleIconFile</key>
     <string>AppIcon</string>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+        <string>en</string>
+        <string>ru</string>
+        <string>es</string>
+        <string>fr</string>
+        <string>de</string>
+        <string>it</string>
+        <string>pt</string>
+        <string>zh-Hans</string>
+        <string>ja</string>
+        <string>ko</string>
+    </array>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
@@ -30,5 +45,13 @@
     <true/>
     <key>NSHumanReadableCopyright</key>
     <string>© 2026 zheltukheen</string>
+    <key>SUFeedURL</key>
+    <string>https://github.com/zheltukheen/darknotch_on_golden_gate/releases/latest/download/appcast.xml</string>
+    <key>SUPublicEDKey</key>
+    <string>__SPARKLE_PUBLIC_KEY__</string>
+    <key>SUEnableAutomaticChecks</key>
+    <true/>
+    <key>SUScheduledCheckInterval</key>
+    <integer>86400</integer>
 </dict>
 </plist>

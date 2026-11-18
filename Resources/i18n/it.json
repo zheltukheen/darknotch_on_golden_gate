@@ -1,0 +1,26 @@
+{
+  "code": "it",
+  "name": "Italiano",
+  "strings": {
+    "hide_notch": "Nascondi il notch",
+    "round_corners": "Angoli arrotondati",
+    "off": "Disattivato",
+    "small": "Piccoli",
+    "medium": "Medi",
+    "large": "Grandi",
+    "hide_app_menus": "Nascondi i menu delle app",
+    "hide_menu_bar_icons": "Nascondi le icone della barra dei menu",
+    "fade_full_screen": "Attenua la barra dei menu a schermo intero",
+    "accessibility_on": "Accessibilità: attiva",
+    "accessibility_on_count": "Accessibilità: attiva · %d icone trovate",
+    "accessibility_off": "Accessibilità: disattiva, fai clic per correggere",
+    "launch_at_login": "Apri al login",
+    "launch_at_login_approve": "Apri al login (approva in Impostazioni di Sistema)",
+    "check_for_updates": "Controlla aggiornamenti…",
+    "quit": "Esci da DarkNotch",
+    "menu_bar_black": "La barra dei menu è nera",
+    "wallpaper_unreadable": "Impossibile leggere questo sfondo. Scegli un’immagine normale",
+    "login_error_title": "Impossibile modificare Apri al login",
+    "login_error_message": "Sposta DarkNotch nella cartella Applicazioni e riprova.\n\n%@"
+  }
+}

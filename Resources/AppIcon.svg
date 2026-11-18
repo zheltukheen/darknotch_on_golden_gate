@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="#131c33"/>
+      <stop offset="0.55" stop-color="#0a0e18"/>
+      <stop offset="1" stop-color="#05070c"/>
+    </linearGradient>
+    <linearGradient id="aurora" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.5" stop-color="#818cf8"/>
+      <stop offset="1" stop-color="#f472b6"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="warm" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#c084fc" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#c084fc" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="26"/>
+    </filter>
+    <filter id="soft2" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <clipPath id="tile">
+      <rect width="1024" height="1024" rx="224"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#tile)">
+    <rect width="1024" height="1024" fill="url(#bg)"/>
+    <ellipse cx="300" cy="760" rx="430" ry="260" fill="url(#warm)"/>
+    <ellipse cx="760" cy="690" rx="440" ry="250" fill="url(#glow)"/>
+
+    <!-- Two ribbons of light, not a landscape: the product hides what is behind the bar. -->
+    <path d="M -120 806 C 190 606 388 934 1148 548" fill="none"
+          stroke="url(#aurora)" stroke-width="128" opacity="0.55" filter="url(#soft)"/>
+    <path d="M -120 806 C 190 606 388 934 1148 548" fill="none"
+          stroke="url(#aurora)" stroke-width="22" opacity="0.9"/>
+    <path d="M -80 930 C 310 792 560 986 1104 714" fill="none"
+          stroke="#93c5fd" stroke-width="3" opacity="0.35"/>
+
+    <!-- A fine grid fading into the dark, like an invisible desktop. -->
+    <g stroke="#ffffff" stroke-width="1" opacity="0.05">
+      <path d="M0 260H1024M0 340H1024M0 420H1024M0 500H1024M0 580H1024M0 660H1024M0 740H1024M0 820H1024M0 900H1024"/>
+      <path d="M160 240V1024M320 240V1024M480 240V1024M640 240V1024M800 240V1024M960 240V1024"/>
+    </g>
+
+    <!-- The notch: a clean cut out of the top edge, with a cold rim light. -->
+    <path d="M 336 -40 H 688 V 92 C 688 168 642 206 574 206 H 450 C 382 206 336 168 336 92 Z"
+          fill="#04060a"/>
+    <path d="M 336 20 V 92 C 336 168 382 206 450 206 H 574 C 642 206 688 168 688 92 V 20"
+          fill="none" stroke="#67e8f9" stroke-width="5" opacity="0.55"/>
+    <path d="M 336 20 V 92 C 336 168 382 206 450 206 H 574 C 642 206 688 168 688 92 V 20"
+          fill="none" stroke="#67e8f9" stroke-width="16" opacity="0.12" filter="url(#soft2)"/>
+
+    <!-- Menu bar line, interrupted by the notch. -->
+    <path d="M 0 236 H 336 M 688 236 H 1024" stroke="#e2e8f0" stroke-width="3" opacity="0.22"/>
+    <path d="M 0 236 H 336 M 688 236 H 1024" stroke="#ffffff" stroke-width="1" opacity="0.18"/>
+
+    <!-- A small sparkle for the updater. -->
+    <g fill="#f0f9ff" opacity="0.92">
+      <path d="M 796 330 C 802 366 812 376 848 382 C 812 388 802 398 796 434 C 790 398 780 388 744 382 C 780 376 790 366 796 330 Z"/>
+      <path d="M 880 296 C 883 312 887 316 903 319 C 887 322 883 326 880 342 C 877 326 873 322 857 319 C 873 316 877 312 880 296 Z" opacity="0.7"/>
+    </g>
+    <circle cx="796" cy="382" r="52" fill="#67e8f9" opacity="0.10" filter="url(#soft)"/>
+
+    <!-- Inner rim -->
+    <rect x="10" y="10" width="1004" height="1004" rx="214" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.08"/>
+  </g>
+</svg>

@@ -82,7 +82,7 @@ def render(scale: int) -> Image.Image:
 
     draw.text(
         (22 * s, h - 20 * s),
-        "macOS 13+  ·  Apple silicon",
+        "macOS 27  ·  Apple silicon",
         font=font(REGULAR, 12 * s),
         fill=(104, 109, 124),
         anchor="ls",

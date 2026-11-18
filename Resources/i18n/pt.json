@@ -1,0 +1,26 @@
+{
+  "code": "pt",
+  "name": "Português",
+  "strings": {
+    "hide_notch": "Ocultar o entalhe",
+    "round_corners": "Cantos arredondados",
+    "off": "Desativado",
+    "small": "Pequenos",
+    "medium": "Médios",
+    "large": "Grandes",
+    "hide_app_menus": "Ocultar menus dos apps",
+    "hide_menu_bar_icons": "Ocultar ícones da barra de menus",
+    "fade_full_screen": "Escurecer a barra de menus em tela cheia",
+    "accessibility_on": "Acessibilidade: ativada",
+    "accessibility_on_count": "Acessibilidade: ativada · %d ícones encontrados",
+    "accessibility_off": "Acessibilidade: desativada, clique para corrigir",
+    "launch_at_login": "Abrir ao iniciar sessão",
+    "launch_at_login_approve": "Abrir ao iniciar sessão (aprove nos Ajustes do Sistema)",
+    "check_for_updates": "Verificar atualizações…",
+    "quit": "Encerrar o DarkNotch",
+    "menu_bar_black": "A barra de menus está preta",
+    "wallpaper_unreadable": "Não foi possível ler este papel de parede. Escolha uma imagem normal",
+    "login_error_title": "Não foi possível alterar Abrir ao iniciar sessão",
+    "login_error_message": "Mova o DarkNotch para a pasta Aplicativos e tente novamente.\n\n%@"
+  }
+}

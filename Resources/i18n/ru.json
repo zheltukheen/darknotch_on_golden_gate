@@ -1,0 +1,26 @@
+{
+  "code": "ru",
+  "name": "Русский",
+  "strings": {
+    "hide_notch": "Скрыть вырез",
+    "round_corners": "Скруглённые углы",
+    "off": "Выкл.",
+    "small": "Малые",
+    "medium": "Средние",
+    "large": "Большие",
+    "hide_app_menus": "Скрыть меню приложений",
+    "hide_menu_bar_icons": "Скрыть значки строки меню",
+    "fade_full_screen": "Затемнять строку меню в полноэкранном режиме",
+    "accessibility_on": "Универсальный доступ: включён",
+    "accessibility_on_count": "Универсальный доступ: включён · значков: %d",
+    "accessibility_off": "Универсальный доступ: выключен, нажмите для исправления",
+    "launch_at_login": "Запуск при входе",
+    "launch_at_login_approve": "Запуск при входе (подтвердите в Системных настройках)",
+    "check_for_updates": "Проверить обновления…",
+    "quit": "Завершить DarkNotch",
+    "menu_bar_black": "Строка меню чёрная",
+    "wallpaper_unreadable": "Не удалось прочитать эти обои. Выберите обычное изображение",
+    "login_error_title": "Не удалось изменить запуск при входе",
+    "login_error_message": "Переместите DarkNotch в папку Applications и попробуйте снова.\n\n%@"
+  }
+}

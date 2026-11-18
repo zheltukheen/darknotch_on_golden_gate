@@ -1,0 +1,26 @@
+{
+  "code": "ko",
+  "name": "한국어",
+  "strings": {
+    "hide_notch": "노치 가리기",
+    "round_corners": "모서리 둥글게",
+    "off": "끔",
+    "small": "작게",
+    "medium": "중간",
+    "large": "크게",
+    "hide_app_menus": "앱 메뉴 가리기",
+    "hide_menu_bar_icons": "메뉴 막대 아이콘 가리기",
+    "fade_full_screen": "전체 화면에서 메뉴 막대 흐리게",
+    "accessibility_on": "손쉬운 사용: 켬",
+    "accessibility_on_count": "손쉬운 사용: 켬 · 아이콘 %d개",
+    "accessibility_off": "손쉬운 사용: 끔, 클릭하여 수정",
+    "launch_at_login": "로그인 시 열기",
+    "launch_at_login_approve": "로그인 시 열기(시스템 설정에서 승인)",
+    "check_for_updates": "업데이트 확인…",
+    "quit": "DarkNotch 종료",
+    "menu_bar_black": "메뉴 막대가 검게 표시됩니다",
+    "wallpaper_unreadable": "이 배경 화면을 읽을 수 없습니다. 일반 이미지를 선택하세요",
+    "login_error_title": "로그인 시 열기를 변경할 수 없습니다",
+    "login_error_message": "DarkNotch를 Applications 폴더로 이동한 후 다시 시도하세요.\n\n%@"
+  }
+}

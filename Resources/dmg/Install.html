@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DarkNotch — установка / installation</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #07090f;
+    --panel: #0e131f;
+    --panel2: #131a2a;
+    --line: #253046;
+    --text: #f1f5fb;
+    --muted: #97a3b8;
+    --dim: #6d7a91;
+    --cyan: #67e8f9;
+    --violet: #a78bfa;
+    --pink: #f472b6;
+    --ok: #34d399;
+    --warn: #fbbf24;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    background:
+      radial-gradient(900px 520px at 12% 0%, rgba(56, 189, 248, .14), transparent 60%),
+      radial-gradient(900px 600px at 92% 10%, rgba(167, 139, 250, .14), transparent 60%),
+      radial-gradient(800px 500px at 50% 110%, rgba(244, 114, 182, .10), transparent 60%),
+      var(--bg);
+    color: var(--text);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    padding: 48px 24px 64px;
+  }
+  .page { width: min(880px, 100%); margin: 0 auto; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .mark { width: 58px; height: 58px; border-radius: 15px; box-shadow: 0 12px 30px rgba(0,0,0,.45); flex: none; }
+  .brand h1 { margin: 0; font-size: 25px; letter-spacing: -.3px; }
+  .brand p { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(103, 232, 249, .28);
+    background: rgba(103, 232, 249, .08);
+    color: #cffafe; font-size: 12px; font-weight: 600;
+    padding: 7px 11px; border-radius: 999px; white-space: nowrap;
+  }
+  .badge i { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+  .lang { display: flex; gap: 6px; padding: 5px; border: 1px solid var(--line); background: rgba(14, 19, 31, .8); border-radius: 12px; }
+  .lang button {
+    appearance: none; border: 0; background: transparent; color: var(--muted);
+    font: inherit; font-size: 13px; font-weight: 600; padding: 7px 12px; border-radius: 8px; cursor: pointer;
+  }
+  .lang button[aria-pressed="true"] { background: var(--panel2); color: var(--text); box-shadow: 0 1px 0 rgba(255,255,255,.05) inset; }
+  .lang button:focus-visible, .copy:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+  .hero {
+    margin-top: 30px; padding: 30px 32px;
+    border: 1px solid var(--line); border-radius: 22px;
+    background: linear-gradient(180deg, rgba(19, 26, 42, .92), rgba(10, 14, 24, .92));
+    box-shadow: 0 24px 70px rgba(0,0,0,.38);
+  }
+  .hero h2 { margin: 0 0 8px; font-size: 30px; letter-spacing: -.6px; line-height: 1.15; }
+  .hero p { margin: 0; color: var(--muted); max-width: 66ch; }
+  .hero .accent {
+    background: linear-gradient(90deg, var(--cyan), var(--violet) 60%, var(--pink));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .note {
+    margin-top: 18px; padding: 13px 15px; border-radius: 12px;
+    border: 1px solid rgba(251, 191, 36, .22); background: rgba(251, 191, 36, .07);
+    color: #fde9b2; font-size: 13.5px;
+  }
+
+  .steps { margin: 26px 0 0; padding: 0; list-style: none; counter-reset: step; display: grid; gap: 14px; }
+  .step {
+    counter-increment: step; position: relative;
+    padding: 22px 24px 22px 74px;
+    border: 1px solid var(--line); border-radius: 18px; background: rgba(14, 19, 31, .72);
+  }
+  .step::before {
+    content: counter(step);
+    position: absolute; left: 22px; top: 22px;
+    width: 34px; height: 34px; border-radius: 11px;
+    display: grid; place-items: center;
+    background: linear-gradient(145deg, rgba(103,232,249,.18), rgba(167,139,250,.18));
+    border: 1px solid rgba(103,232,249,.25);
+    color: #dff9ff; font-weight: 700; font-size: 14px;
+  }
+  .step h3 { margin: 0 0 5px; font-size: 16.5px; }
+  .step p { margin: 0; color: var(--muted); font-size: 14px; }
+  .step p + p { margin-top: 7px; }
+  .step strong { color: var(--text); font-weight: 600; }
+  kbd {
+    font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+    border: 1px solid #334155; border-bottom-width: 2px; border-radius: 6px;
+    padding: 2px 6px; background: #111827; color: #e2e8f0;
+  }
+
+  .options { display: grid; gap: 10px; margin-top: 12px; }
+  .option { padding: 13px 15px; border: 1px solid #263248; border-radius: 12px; background: rgba(9, 13, 22, .72); }
+  .option .label { color: var(--text); font-weight: 600; font-size: 13.5px; }
+  .option p { margin: 3px 0 0; font-size: 13px; }
+
+  .code {
+    position: relative; margin-top: 12px; border: 1px solid #263248; border-radius: 12px;
+    background: #070b14; overflow: hidden;
+  }
+  .code pre { margin: 0; padding: 16px 54px 16px 16px; overflow-x: auto; font: 12.5px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace; color: #d7e2f2; }
+  .code .prompt { color: var(--dim); user-select: none; }
+  .copy {
+    position: absolute; top: 8px; right: 8px; border: 1px solid #2f3d55; background: #101827;
+    color: #cbd5e1; border-radius: 8px; padding: 5px 9px; font: 600 11.5px/1.4 inherit; cursor: pointer;
+  }
+  .copy:hover { background: #162033; }
+  .hint { margin-top: 8px; color: var(--dim); font-size: 12.5px; }
+
+  .footer { margin-top: 30px; border-top: 1px solid var(--line); padding-top: 18px; color: var(--dim); font-size: 12.5px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .footer span { color: var(--muted); }
+  [data-lang] { display: none; }
+  [data-lang].on { display: block; }
+  .inline { display: inline; }
+
+  @media (max-width: 620px) {
+    body { padding: 28px 14px 44px; }
+    .hero { padding: 24px 20px; }
+    .hero h2 { font-size: 25px; }
+    .step { padding: 20px 18px 20px 64px; }
+    .step::before { left: 16px; top: 20px; }
+    .top { align-items: flex-start; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="top">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 1024 1024" aria-hidden="true">
+        <defs>
+          <linearGradient id="m-bg" x1="0" y1="0" x2="0.2" y2="1">
+            <stop offset="0" stop-color="#131c33"/><stop offset="1" stop-color="#05070c"/>
+          </linearGradient>
+          <linearGradient id="m-a" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#f472b6"/>
+          </linearGradient>
+          <clipPath id="m-tile"><rect width="1024" height="1024" rx="224"/></clipPath>
+        </defs>
+        <g clip-path="url(#m-tile)">
+          <rect width="1024" height="1024" fill="url(#m-bg)"/>
+          <path d="M-120 806C190 606 388 934 1148 548" fill="none" stroke="url(#m-a)" stroke-width="120" opacity=".55"/>
+          <path d="M-120 806C190 606 388 934 1148 548" fill="none" stroke="url(#m-a)" stroke-width="20" opacity=".9"/>
+          <path d="M336-40H688V92C688 168 642 206 574 206H450C382 206 336 168 336 92Z" fill="#04060a"/>
+          <path d="M336 20V92C336 168 382 206 450 206H574C642 206 688 168 688 92V20" fill="none" stroke="#67e8f9" stroke-width="5" opacity=".55"/>
+          <path d="M0 236H336M688 236H1024" stroke="#e2e8f0" stroke-width="3" opacity=".22"/>
+          <path d="M796 330C802 366 812 376 848 382C812 388 802 398 796 434C790 398 780 388 744 382C780 376 790 366 796 330Z" fill="#f0f9ff" opacity=".92"/>
+        </g>
+      </svg>
+      <div>
+        <h1>DarkNotch</h1>
+        <p>Golden Gate · 27</p>
+      </div>
+    </div>
+    <div class="lang" role="group" aria-label="Language / Язык">
+      <button type="button" data-set="ru" aria-pressed="true">Русский</button>
+      <button type="button" data-set="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div data-lang="ru" class="on">
+      <h2>Установка за <span class="accent">две минуты</span></h2>
+      <p>DarkNotch создан для macOS 27 Golden Gate, где многие прежние менеджеры строки меню перестали работать. Приложение может запуститься и на более старых версиях, но цель — именно 27-я.</p>
+      <div class="note">Приложение не подписано платным сертификатом Apple, поэтому первый запуск macOS заблокирует. Это ожидаемо — ниже три способа открыть его.</div>
+    </div>
+    <div data-lang="en">
+      <h2>Installed in <span class="accent">two minutes</span></h2>
+      <p>DarkNotch is built for macOS 27 Golden Gate, where many older menu bar managers stopped working. It may launch on older releases too, but 27 is the target.</p>
+      <div class="note">The app has no paid Apple certificate, so macOS blocks the first launch. That is expected — below are three ways to open it.</div>
+    </div>
+
+    <ol class="steps">
+      <li class="step">
+        <div data-lang="ru" class="on">
+          <h3>Перетащите DarkNotch в Applications</h3>
+          <p>Откройте этот образ в Finder и перетащите иконку <strong>DarkNotch</strong> на папку <strong>Applications</strong> слева.</p>
+        </div>
+        <div data-lang="en">
+          <h3>Drag DarkNotch into Applications</h3>
+          <p>Open this disk image in Finder and drag the <strong>DarkNotch</strong> icon onto the <strong>Applications</strong> folder.</p>
+        </div>
+      </li>
+
+      <li class="step">
+        <div data-lang="ru" class="on">
+          <h3>Снимите блокировку первого запуска</h3>
+          <p>Откройте Applications и запустите DarkNotch. Появится предупреждение — закройте его и используйте один из способов:</p>
+          <div class="options">
+            <div class="option">
+              <div class="label">1 · Системные настройки — macOS 15 и новее</div>
+              <p>Откройте <strong>Системные настройки → Конфиденциальность и безопасность</strong>. Прокрутите до раздела <strong>Безопасность</strong> и нажмите <strong>Открыть всё равно</strong>, затем подтвердите паролем.</p>
+            </div>
+            <div class="option">
+              <div class="label">2 · Правый клик — macOS 13–14</div>
+              <p>В Applications нажмите на DarkNotch правой кнопкой → <strong>Открыть</strong> → в диалоге снова <strong>Открыть</strong>.</p>
+            </div>
+            <div class="option">
+              <div class="label">3 · Терминал — любая версия</div>
+              <p>Уберите карантин и запустите приложение:</p>
+              <div class="code">
+                <pre><span class="prompt">$</span> xattr -dr com.apple.quarantine /Applications/DarkNotch.app
+<span class="prompt">$</span> open /Applications/DarkNotch.app</pre>
+                <button class="copy" type="button" data-copy="xattr -dr com.apple.quarantine /Applications/DarkNotch.app
+open /Applications/DarkNotch.app">Копировать</button>
+              </div>
+              <p class="hint">Эти две строки можно вставить в Терминал целиком.</p>
+            </div>
+          </div>
+        </div>
+        <div data-lang="en">
+          <h3>Allow the first launch</h3>
+          <p>Open Applications and launch DarkNotch. A warning appears — dismiss it and use one of these:</p>
+          <div class="options">
+            <div class="option">
+              <div class="label">1 · System Settings — macOS 15 and later</div>
+              <p>Open <strong>System Settings → Privacy &amp; Security</strong>. Scroll to the <strong>Security</strong> section and click <strong>Open Anyway</strong>, then confirm with your password.</p>
+            </div>
+            <div class="option">
+              <div class="label">2 · Right click — macOS 13–14</div>
+              <p>In Applications, right-click DarkNotch → <strong>Open</strong> → <strong>Open</strong> again in the dialog.</p>
+            </div>
+            <div class="option">
+              <div class="label">3 · Terminal — any macOS version</div>
+              <p>Remove the quarantine flag and launch the app:</p>
+              <div class="code">
+                <pre><span class="prompt">$</span> xattr -dr com.apple.quarantine /Applications/DarkNotch.app
+<span class="prompt">$</span> open /Applications/DarkNotch.app</pre>
+                <button class="copy" type="button" data-copy="xattr -dr com.apple.quarantine /Applications/DarkNotch.app
+open /Applications/DarkNotch.app">Copy</button>
+              </div>
+              <p class="hint">You can paste both lines into Terminal at once.</p>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="step">
+        <div data-lang="ru" class="on">
+          <h3>Разрешите Accessibility</h3>
+          <p>DarkNotch живёт в строке меню. Чтобы работали <strong>Hide App Menus</strong> и <strong>Hide Menu Bar Icons</strong>, включите доступ: <strong>Системные настройки → Конфиденциальность и безопасность → Универсальный доступ</strong>.</p>
+          <p>Если macOS забудет разрешение после обновления, удалите DarkNotch из списка кнопкой <strong>−</strong> и добавьте снова.</p>
+        </div>
+        <div data-lang="en">
+          <h3>Allow Accessibility</h3>
+          <p>DarkNotch lives in the menu bar. For <strong>Hide App Menus</strong> and <strong>Hide Menu Bar Icons</strong> to work, enable it in <strong>System Settings → Privacy &amp; Security → Accessibility</strong>.</p>
+          <p>If macOS forgets the permission after an update, remove DarkNotch from the list with <strong>−</strong> and add it again.</p>
+        </div>
+      </li>
+
+      <li class="step">
+        <div data-lang="ru" class="on">
+          <h3>Обновления</h3>
+          <p>Приложение проверяет обновления само через Sparkle. Вручную: <strong>Проверить обновления…</strong> в меню DarkNotch. Новые версии ставятся без повторного DMG.</p>
+        </div>
+        <div data-lang="en">
+          <h3>Updates</h3>
+          <p>The app checks for updates through Sparkle. Manually: <strong>Check for Updates…</strong> in the DarkNotch menu. New versions install without downloading the DMG again.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="footer">
+    <div data-lang="ru" class="on"><span>Удаление:</span> Quit DarkNotch → удалите /Applications/DarkNotch.app.</div>
+    <div data-lang="en"><span>Uninstall:</span> Quit DarkNotch → delete /Applications/DarkNotch.app.</div>
+    <div>DarkNotch · macOS 27 Golden Gate</div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('.lang button'));
+    var blocks = Array.prototype.slice.call(document.querySelectorAll('[data-lang]'));
+    function setLang(lang) {
+      document.documentElement.lang = lang;
+      blocks.forEach(function (el) { el.classList.toggle('on', el.getAttribute('data-lang') === lang); });
+      buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-set') === lang)); });
+    }
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () { setLang(b.getAttribute('data-set')); });
+    });
+    setLang((navigator.language || 'ru').toLowerCase().indexOf('ru') === 0 ? 'ru' : 'en');
+
+    Array.prototype.slice.call(document.querySelectorAll('.copy')).forEach(function (b) {
+      b.addEventListener('click', function () {
+        var text = b.getAttribute('data-copy');
+        var done = function () {
+          var old = b.textContent;
+          b.textContent = document.documentElement.lang === 'en' ? 'Copied' : 'Скопировано';
+          setTimeout(function () { b.textContent = old; }, 1400);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, done);
+        } else {
+          var ta = document.createElement('textarea');
+          ta.value = text; document.body.appendChild(ta); ta.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          document.body.removeChild(ta); done();
+        }
+      });
+    });
+  })();
+</script>
+</body>
+</html>

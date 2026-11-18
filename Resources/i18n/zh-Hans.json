@@ -1,0 +1,26 @@
+{
+  "code": "zh-Hans",
+  "name": "简体中文",
+  "strings": {
+    "hide_notch": "隐藏刘海",
+    "round_corners": "圆角",
+    "off": "关闭",
+    "small": "小",
+    "medium": "中",
+    "large": "大",
+    "hide_app_menus": "隐藏应用菜单",
+    "hide_menu_bar_icons": "隐藏菜单栏图标",
+    "fade_full_screen": "全屏时淡化菜单栏",
+    "accessibility_on": "辅助功能：已开启",
+    "accessibility_on_count": "辅助功能：已开启 · 找到 %d 个图标",
+    "accessibility_off": "辅助功能：已关闭，点按以修复",
+    "launch_at_login": "登录时打开",
+    "launch_at_login_approve": "登录时打开（请在系统设置中批准）",
+    "check_for_updates": "检查更新…",
+    "quit": "退出 DarkNotch",
+    "menu_bar_black": "菜单栏已变为黑色",
+    "wallpaper_unreadable": "无法读取此壁纸，请选择普通图片",
+    "login_error_title": "无法更改“登录时打开”",
+    "login_error_message": "请将 DarkNotch 移到“应用程序”文件夹后重试。\n\n%@"
+  }
+}

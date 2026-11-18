@@ -24,20 +24,29 @@ if ! command -v swiftc >/dev/null; then
     echo "swiftc not found. Run: xcode-select --install" >&2
     exit 1
 fi
-for tool in sips iconutil codesign plutil; do
+for tool in sips iconutil codesign plutil ditto; do
     if ! command -v "$tool" >/dev/null; then
         echo "$tool not found. Install Apple's command line tools." >&2
         exit 1
     fi
 done
 
+SPARKLE_DIR="$("$ROOT/scripts/fetch-sparkle.sh")"
+PUBLIC_KEY="$(tr -d '[:space:]' < "$ROOT/packaging/sparkle-public-key.txt")"
+
 rm -rf "$APP"
-mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
+mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources" "$APP/Contents/Frameworks"
 
 echo "==> Compiling DarkNotch $VERSION ($BUILD_NUMBER)"
 swiftc -O -target arm64-apple-macos13.0 \
     "$ROOT/Sources/DarkNotch/main.swift" \
+    "$ROOT/Sources/DarkNotch/L10n.swift" \
+    -F "$SPARKLE_DIR" -framework Sparkle \
+    -Xlinker -rpath -Xlinker @executable_path/../Frameworks \
     -o "$APP/Contents/MacOS/DarkNotch"
+
+echo "==> Embedding Sparkle"
+ditto "$SPARKLE_DIR/Sparkle.framework" "$APP/Contents/Frameworks/Sparkle.framework"
 
 echo "==> Building app icon"
 ICONSET="$(mktemp -d)/AppIcon.iconset"
@@ -52,9 +61,13 @@ done
 iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/AppIcon.icns"
 
 cp "$ROOT/LICENSE" "$APP/Contents/Resources/LICENSE"
+cp "$ROOT/Resources/LICENSE-SPARKLE" "$APP/Contents/Resources/LICENSE-SPARKLE"
+cp -R "$ROOT/Resources/i18n" "$APP/Contents/Resources/i18n"
 
 echo "==> Writing Info.plist"
-sed -e "s/__VERSION__/$VERSION/g" -e "s/__BUILD__/$BUILD_NUMBER/g" \
+sed -e "s/__VERSION__/$VERSION/g" \
+    -e "s/__BUILD__/$BUILD_NUMBER/g" \
+    -e "s|__SPARKLE_PUBLIC_KEY__|$PUBLIC_KEY|g" \
     "$ROOT/packaging/Info.plist" > "$APP/Contents/Info.plist"
 plutil -lint "$APP/Contents/Info.plist" >/dev/null
 
@@ -63,9 +76,9 @@ plutil -lint "$APP/Contents/Info.plist" >/dev/null
 echo "==> Signing (ad-hoc)"
 codesign --force --sign - --identifier com.zheltukheen.darknotch \
     --timestamp=none "$APP"
-codesign --verify --strict "$APP"
+codesign --verify --deep --strict "$APP"
 
-rm -rf "$ROOT/dist/DarkNotch.app.zip"
-ditto -c -k --keepParent "$APP" "$ROOT/dist/DarkNotch.app.zip"
+rm -f "$ROOT/dist/DarkNotch.app.zip" "$ROOT/dist/DarkNotch-$VERSION.zip"
+ditto -c -k --sequesterRsrc --keepParent "$APP" "$ROOT/dist/DarkNotch-$VERSION.zip"
 
 echo "Built $APP"

@@ -1,0 +1,26 @@
+{
+  "code": "es",
+  "name": "Español",
+  "strings": {
+    "hide_notch": "Ocultar la muesca",
+    "round_corners": "Esquinas redondeadas",
+    "off": "Desactivado",
+    "small": "Pequeñas",
+    "medium": "Medianas",
+    "large": "Grandes",
+    "hide_app_menus": "Ocultar menús de apps",
+    "hide_menu_bar_icons": "Ocultar iconos de la barra de menús",
+    "fade_full_screen": "Atenuar la barra de menús en pantalla completa",
+    "accessibility_on": "Accesibilidad: activada",
+    "accessibility_on_count": "Accesibilidad: activada · %d iconos encontrados",
+    "accessibility_off": "Accesibilidad: desactivada, haz clic para corregir",
+    "launch_at_login": "Abrir al iniciar sesión",
+    "launch_at_login_approve": "Abrir al iniciar sesión (aprueba en Ajustes del Sistema)",
+    "check_for_updates": "Buscar actualizaciones…",
+    "quit": "Salir de DarkNotch",
+    "menu_bar_black": "La barra de menús es negra",
+    "wallpaper_unreadable": "No se puede leer este fondo. Elige una imagen normal",
+    "login_error_title": "No se pudo cambiar Abrir al iniciar sesión",
+    "login_error_message": "Mueve DarkNotch a la carpeta Aplicaciones e inténtalo de nuevo.\n\n%@"
+  }
+}

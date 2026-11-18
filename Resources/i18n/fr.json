@@ -1,0 +1,26 @@
+{
+  "code": "fr",
+  "name": "Français",
+  "strings": {
+    "hide_notch": "Masquer l’encoche",
+    "round_corners": "Coins arrondis",
+    "off": "Désactivé",
+    "small": "Petits",
+    "medium": "Moyens",
+    "large": "Grands",
+    "hide_app_menus": "Masquer les menus des apps",
+    "hide_menu_bar_icons": "Masquer les icônes de la barre des menus",
+    "fade_full_screen": "Estomper la barre des menus en plein écran",
+    "accessibility_on": "Accessibilité : activée",
+    "accessibility_on_count": "Accessibilité : activée · %d icônes trouvées",
+    "accessibility_off": "Accessibilité : désactivée, cliquez pour corriger",
+    "launch_at_login": "Ouvrir à l’ouverture de session",
+    "launch_at_login_approve": "Ouvrir à l’ouverture de session (à approuver dans Réglages Système)",
+    "check_for_updates": "Rechercher les mises à jour…",
+    "quit": "Quitter DarkNotch",
+    "menu_bar_black": "La barre des menus est noire",
+    "wallpaper_unreadable": "Impossible de lire ce fond d’écran. Choisissez une image classique",
+    "login_error_title": "Impossible de modifier l’ouverture à la session",
+    "login_error_message": "Placez DarkNotch dans le dossier Applications et réessayez.\n\n%@"
+  }
+}
