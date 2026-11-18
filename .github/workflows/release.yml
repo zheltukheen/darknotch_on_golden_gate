@@ -104,7 +104,7 @@ jobs:
           Обновления приходят автоматически через Sparkle: **Проверить обновления…**
           в меню приложения. Для обновления не нужен повторный DMG.
 
-          SHA-256: $(cut -d' ' -f1 dist/SHA256SUMS)
+          SHA-256: $(awk -v f="DarkNotch-$VERSION.dmg" '$2 == f {print $1}' dist/SHA256SUMS)
 
           ---
 
@@ -115,7 +115,7 @@ jobs:
           **System Settings → Privacy & Security → Open Anyway**.
 
           Updates are delivered by Sparkle via **Check for Updates…** in the app menu.
-          SHA-256: $(cut -d' ' -f1 dist/SHA256SUMS)
+          SHA-256: $(awk -v f="DarkNotch-$VERSION.dmg" '$2 == f {print $1}' dist/SHA256SUMS)
           EOF
 
           assets=("$dmg" "$zip" dist/appcast.xml dist/SHA256SUMS)
